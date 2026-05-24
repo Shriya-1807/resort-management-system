@@ -51,7 +51,7 @@ const getBookingById = async (booking_id, requestor) => {
         b.booking_id, b.check_in, b.check_out, b.num_guests, b.status, b.created_at,
         g.guest_id, g.first_name, g.last_name, g.email, g.phone,
         rt.type_name AS room_type,
-        r.room_number, r.floor,
+        r.room_id, r.room_number, r.floor,
         br.price_per_day,
         DATEDIFF(b.check_out, b.check_in) AS nights,
         ROUND(br.price_per_day * DATEDIFF(b.check_out, b.check_in), 2) AS total_room_cost,
@@ -84,7 +84,7 @@ const getBookingsByGuest = async (guest_id) => {
   const [rows] = await pool.execute(
     `SELECT
         b.booking_id, b.check_in, b.check_out, b.num_guests, b.status, b.created_at,
-        rt.type_name AS room_type, r.room_number,
+        rt.type_name AS room_type, r.room_id, r.room_number,
         br.price_per_day,
         DATEDIFF(b.check_out, b.check_in) AS nights,
         ROUND(br.price_per_day * DATEDIFF(b.check_out, b.check_in), 2) AS total_room_cost,
@@ -105,7 +105,9 @@ const getBookingsByGuest = async (guest_id) => {
  * Admin: list all bookings with optional status filter.
  */
 const getAllBookings = async ({ status, page = 1, limit = 20 }) => {
-  const offset = (page - 1) * limit;
+  const safePage = Math.max(1, parseInt(page, 10) || 1);
+  const safeLimit = Math.min(100, Math.max(1, parseInt(limit, 10) || 20));
+  const offset = (safePage - 1) * safeLimit;
   const params = [];
   let where    = '';
 
@@ -128,8 +130,8 @@ const getAllBookings = async ({ status, page = 1, limit = 20 }) => {
      LEFT JOIN Payment p  ON b.booking_id  = p.booking_id
      ${where}
      ORDER BY b.created_at DESC
-     LIMIT ? OFFSET ?`,
-    [...params, limit, offset]
+     LIMIT ${safeLimit} OFFSET ${offset}`,
+    params
   );
 
   const [[{ total }]] = await pool.execute(
@@ -137,7 +139,7 @@ const getAllBookings = async ({ status, page = 1, limit = 20 }) => {
     params
   );
 
-  return { bookings: rows, total, page, limit };
+  return { bookings: rows, total, page: safePage, limit: safeLimit };
 };
 
 /**

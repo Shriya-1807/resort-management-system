@@ -9,6 +9,7 @@ const { createError } = require('../middleware/errorHandler');
 const createTicket = async (booking_id, { room_id, category, description }, requestor) => {
   // Ownership check
   await _assertGuestOwnsBooking(booking_id, requestor);
+  await _assertBookingCurrentlyInStayWindow(booking_id);
 
   // Verify room belongs to booking
   const [brRows] = await pool.execute(
@@ -86,6 +87,22 @@ const _assertGuestOwnsBooking = async (booking_id, requestor) => {
   if (!rows.length) throw createError(404, 'Booking not found');
   if (rows[0].guest_id !== requestor.id)
     throw createError(403, 'You do not own this booking');
+};
+
+const _assertBookingCurrentlyInStayWindow = async (booking_id) => {
+  const [rows] = await pool.execute(
+    `SELECT status, check_in, check_out
+       FROM Booking
+      WHERE booking_id = ?
+        AND status IN ('CONFIRMED','CHECKED_IN')
+        AND CURDATE() >= check_in
+        AND CURDATE() < check_out`,
+    [booking_id]
+  );
+
+  if (!rows.length) {
+    throw createError(400, 'Service tickets are allowed only during the guest stay period after check-in and before check-out');
+  }
 };
 
 module.exports = { createTicket, getTicketsByBooking, getOpenTickets, updateTicket };

@@ -1,0 +1,353 @@
+/* ── Hero ─────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  height: calc(100vh - var(--nav-h));
+  min-height: 560px;
+  margin-top: var(--nav-h);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  color: var(--white);
+}
+
+.heroImg {
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.4s ease;
+}
+.heroImg.fading { opacity: 0; }
+
+.imgPlaceholder {
+  position: absolute;
+  inset: 0;
+  background-color: var(--bark);  /* fallback when image missing */
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.04);
+  animation: heroZoom 8s ease-in-out infinite alternate;
+}
+@keyframes heroZoom {
+  from { transform: scale(1.04); }
+  to   { transform: scale(1.10); }
+}
+
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(30, 14, 4, 0.25) 0%,
+    rgba(30, 14, 4, 0.45) 50%,
+    rgba(30, 14, 4, 0.7) 100%
+  );
+}
+
+.heroContent {
+  position: absolute;
+  bottom: 5rem;
+  right: 2rem;
+  z-index: 2;
+  text-align: right;
+  padding: 1.25rem 1.5rem;
+  background: rgba(30, 14, 4, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 360px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.heroEyebrow {
+  color: var(--amber-light);
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.1em;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.heroTitle {
+  color: var(--white);
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  line-height: 1.1;
+  text-shadow: 0 2px 12px rgba(30,14,4,0.4);
+}
+
+.heroSub {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  margin: 0 0 1rem auto;
+}
+
+.heroCtas {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+/* Slide controls */
+.heroControls {
+  position: absolute;
+  bottom: 8rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.slideBtn {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(6px);
+  color: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.slideBtn:hover { background: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.7); }
+
+.dots { display: flex; gap: 0.5rem; }
+.dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.35);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.dotActive { background: var(--amber-light); transform: scale(1.4); }
+
+/* Stats bar */
+.statsBar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: rgba(30,14,4,0.7);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.stat {
+  padding: 1.25rem 0;
+  text-align: center;
+  border-right: 1px solid rgba(255,255,255,0.1);
+  display: flex; flex-direction: column; gap: 0.2rem;
+}
+.stat:last-child { border-right: none; }
+
+.statVal {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--amber-light);
+  line-height: 1;
+}
+.statLabel {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+}
+
+/* ── Intro ────────────────────────────────────────────────── */
+.intro {
+  position: relative;
+  overflow: hidden;
+  min-height: 620px;
+  display: flex;
+  align-items: center;
+  background:
+    linear-gradient(90deg, rgba(253, 250, 245, 0.96) 0%, rgba(253, 250, 245, 0.84) 42%, rgba(253, 250, 245, 0.18) 100%),
+    url('/images/gulmohar-blooms-bg.png') center / cover no-repeat,
+    var(--cream);
+}
+
+.intro::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(253,250,245,0.08), rgba(253,250,245,0.46));
+}
+
+.introGrid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 560px) 1fr;
+  gap: 6rem;
+  align-items: center;
+}
+
+.introText {
+  padding: 2rem 0;
+}
+
+.introImgGrid {
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  height: 480px;
+}
+
+.introImgCol {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.introImg {
+  border-radius: 3px;
+  background-color: var(--sand);
+  background-size: cover;
+  background-position: center;
+  flex: 1;
+}
+
+.imgTall { grid-row: span 1; }
+
+/* ── Rooms ────────────────────────────────────────────────── */
+.roomsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.roomCard { border-radius: 4px; }
+
+.roomImgWrap {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+}
+
+.roomImg {
+  position: absolute;
+  inset: 0;
+  background-color: var(--sand);
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.6s var(--ease);
+}
+.roomCard:hover .roomImg { transform: scale(1.05); }
+
+.roomImgOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(30,14,4,0.45);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.roomCard:hover .roomImgOverlay { opacity: 1; }
+
+.roomBody { padding: 1.5rem; }
+
+/* ── Amenities ────────────────────────────────────────────── */
+.amenitiesGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.amenityCard {
+  padding: 2rem 1.5rem;
+  border: 1px solid var(--sand);
+  border-radius: 3px;
+  background: var(--white);
+  transition: all 0.3s ease;
+}
+.amenityCard:hover {
+  border-color: var(--amber-light);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+}
+
+.amenityIcon {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: var(--amber-pale);
+  color: var(--amber-deep);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.2rem;
+}
+
+/* ── Gallery strip ────────────────────────────────────────── */
+.galleryStrip {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  height: 300px;
+}
+
+.galleryCell {
+  position: relative;
+  background-color: var(--bark);
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  transition: flex 0.4s ease;
+}
+.galleryCell:hover { flex: 1.8; }
+
+.galleryCellOverlay {
+  position: absolute; inset: 0;
+  background: rgba(30,14,4,0.25);
+  transition: opacity 0.3s ease;
+}
+.galleryCell:hover .galleryCellOverlay { opacity: 0; }
+
+/* ── CTA Banner ───────────────────────────────────────────── */
+.ctaBanner {
+  position: relative;
+  padding: 8rem 0;
+  overflow: hidden;
+}
+
+.ctaBannerBg {
+  position: absolute; inset: 0;
+  background-color: var(--bark);
+  background-size: cover;
+  background-position: center;
+}
+.ctaBannerOverlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(30,14,4,0.75), rgba(120,50,10,0.65));
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .amenitiesGrid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 900px) {
+  .roomsGrid { grid-template-columns: 1fr; }
+  .introGrid { grid-template-columns: 1fr; gap: 3rem; }
+  .introImgGrid { height: 300px; }
+  .statsBar { grid-template-columns: repeat(2, 1fr); }
+  .galleryStrip { grid-template-columns: repeat(3, 1fr); height: 240px; }
+  .galleryCell:nth-child(4), .galleryCell:nth-child(5) { display: none; }
+}
+
+@media (max-width: 600px) {
+  .heroContent { 
+    bottom: 6rem; 
+    right: 1rem; 
+    left: 1rem; 
+    padding: 1.5rem; 
+    text-align: left;
+  }
+  .heroSub { margin: 0 0 1.5rem 0; }
+  .heroCtas { justify-content: flex-start; }
+  .amenitiesGrid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .galleryStrip { grid-template-columns: repeat(2, 1fr); }
+  .galleryCell:nth-child(3) { display: none; }
+}

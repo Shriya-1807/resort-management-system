@@ -29,16 +29,17 @@ const updateProfile = async (guest_id, { first_name, last_name, phone, address }
 
 // Admin: list all guests
 const getAllGuests = async ({ page = 1, limit = 20 }) => {
-  const offset = (page - 1) * limit;
+  const safePage = Math.max(1, parseInt(page, 10) || 1);
+  const safeLimit = Math.min(100, Math.max(1, parseInt(limit, 10) || 20));
+  const offset = (safePage - 1) * safeLimit;
   const [rows] = await pool.execute(
     `SELECT guest_id, first_name, last_name, email, phone, created_at
        FROM GuestAccount
       ORDER BY created_at DESC
-      LIMIT ? OFFSET ?`,
-    [limit, offset]
+      LIMIT ${safeLimit} OFFSET ${offset}`
   );
   const [[{ total }]] = await pool.execute(`SELECT COUNT(*) AS total FROM GuestAccount`);
-  return { guests: rows, total, page, limit };
+  return { guests: rows, total, page: safePage, limit: safeLimit };
 };
 
 module.exports = { getProfile, updateProfile, getAllGuests };

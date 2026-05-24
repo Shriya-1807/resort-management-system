@@ -38,6 +38,7 @@ const placeOrder = async (booking_id, { room_id, delivery_type, items }, request
 
   // Verify guest owns the booking
   await _assertGuestOwnsBooking(booking_id, requestor);
+  await _assertBookingCurrentlyInStayWindow(booking_id);
 
   // Verify room belongs to booking
   const [brRows] = await pool.execute(
@@ -206,4 +207,20 @@ module.exports = {
   rateOrderItem,
   getActiveOrders,
   toggleMenuItemAvailability,
+};
+
+const _assertBookingCurrentlyInStayWindow = async (booking_id) => {
+  const [rows] = await pool.execute(
+    `SELECT status, check_in, check_out
+       FROM Booking
+      WHERE booking_id = ?
+        AND status IN ('CONFIRMED','CHECKED_IN')
+        AND CURDATE() >= check_in
+        AND CURDATE() < check_out`,
+    [booking_id]
+  );
+
+  if (!rows.length) {
+    throw createError(400, 'Food orders are allowed only during the guest stay period after check-in and before check-out');
+  }
 };

@@ -119,7 +119,9 @@ const getCancellationsByGuest = async (guest_id) => {
  * Admin: list all cancellations with optional pagination.
  */
 const getAllCancellations = async ({ page = 1, limit = 20 }) => {
-  const offset = (page - 1) * limit;
+  const safePage = Math.max(1, parseInt(page, 10) || 1);
+  const safeLimit = Math.min(100, Math.max(1, parseInt(limit, 10) || 20));
+  const offset = (safePage - 1) * safeLimit;
   const [rows] = await pool.execute(
     `SELECT c.cancellation_id, c.booking_id, c.reason, c.cancelled_at,
             g.first_name, g.last_name, g.email,
@@ -135,8 +137,7 @@ const getAllCancellations = async ({ page = 1, limit = 20 }) => {
        JOIN RoomType     rt ON r.room_type_id = rt.room_type_id
        LEFT JOIN Refund  rf ON c.cancellation_id = rf.cancellation_id
       ORDER BY c.cancelled_at DESC
-      LIMIT ? OFFSET ?`,
-    [limit, offset]
+      LIMIT ${safeLimit} OFFSET ${offset}`
   );
   return rows;
 };

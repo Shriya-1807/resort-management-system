@@ -1,0 +1,123 @@
+.page {
+  padding-top: var(--nav-h);
+  min-height: 100vh;
+  background: var(--ivory);
+}
+
+.hero {
+  padding: 5rem 0 3.5rem;
+  color: var(--white);
+  background:
+    linear-gradient(135deg, rgba(30, 20, 10, 0.9), rgba(122, 74, 30, 0.72)),
+    url('/images/cancellation-hero.jpg') center / cover,
+    var(--umber);
+}
+
+.hero p:first-child {
+  color: var(--amber-light);
+  margin-bottom: 0.5rem;
+}
+
+.hero p:last-child {
+  max-width: 720px;
+  color: rgba(255,255,255,0.72);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(360px, 1fr);
+  gap: 1.5rem;
+  padding-top: 2rem;
+  padding-bottom: 4rem;
+  align-items: start;
+}
+
+.formCard,
+.historyCard {
+  background: var(--white);
+  border: 1px solid var(--sand);
+  border-radius: 4px;
+  box-shadow: var(--shadow-sm);
+}
+
+.formCard {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 2rem;
+}
+
+.notice {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  padding: 1rem;
+  color: var(--bark);
+  background: var(--amber-pale);
+  border: 1px solid var(--amber-light);
+  border-radius: 4px;
+  font-size: 0.86rem;
+}
+
+.notice svg {
+  flex-shrink: 0;
+  color: var(--amber-deep);
+}
+
+.historyCard {
+  padding: 1.6rem;
+}
+
+.historyCard > p {
+  color: var(--amber-deep);
+  margin-bottom: 0.3rem;
+}
+
+.muted {
+  color: var(--taupe);
+  margin-top: 1rem;
+}
+
+.historyList {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.4rem;
+}
+
+.historyList article {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--cream);
+  border: 1px solid var(--sand);
+  border-radius: 4px;
+}
+
+.historyList strong {
+  display: block;
+  color: var(--umber);
+}
+
+.historyList span,
+.historyList p {
+  color: var(--taupe);
+  font-size: 0.85rem;
+}
+
+.historyList article > div:last-child {
+  display: grid;
+  justify-items: end;
+  gap: 0.45rem;
+}
+
+@media (max-width: 900px) {
+  .layout,
+  .historyList article {
+    grid-template-columns: 1fr;
+  }
+
+  .historyList article > div:last-child {
+    justify-items: start;
+  }
+}
