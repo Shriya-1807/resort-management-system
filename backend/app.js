@@ -16,7 +16,7 @@ const cancellationRoutes= require('./routes/cancellation.routes');
 const restaurantRoutes  = require('./routes/restaurant.routes');
 const ticketRoutes      = require('./routes/ticket.routes');
 const adminRoutes       = require('./routes/admin.routes');
-const { errorHandler } = require('./middleware/errorHandler');
+const { errorHandler } = require('./middleware/errorhandler');
 
 const app = express();
 

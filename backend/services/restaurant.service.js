@@ -1,7 +1,7 @@
 'use strict';
 
 const pool            = require('../config/db');
-const { createError } = require('../middleware/errorHandler');
+const { createError } = require('../middleware/errorhandler');
 
 // ── Menu ──────────────────────────────────────────────────────
 

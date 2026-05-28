@@ -9,7 +9,7 @@ const router   = express.Router();
 const guestService = require('../services/guest.service');
 const { validate } = require('../middleware/validate');
 const { authenticate, requireAdmin, requireStaff } = require('../middleware/auth.middleware');
-const { createError } = require('../middleware/errorHandler');
+const { createError } = require('../middleware/errorhandler');
 
 // All admin routes require authentication. Role checks per route below.
 

@@ -1,7 +1,7 @@
 'use strict';
 
 const pool            = require('../config/db');
-const { createError } = require('../middleware/errorHandler');
+const { createError } = require('../middleware/errorhandler');
 
 /**
  * Create a booking via the stored procedure sp_create_booking_by_room_type.

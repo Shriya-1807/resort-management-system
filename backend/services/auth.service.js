@@ -3,7 +3,7 @@
 const bcrypt          = require('bcrypt');
 const pool            = require('../config/db');
 const { signToken }   = require('../utils/jwt');
-const { createError } = require('../middleware/errorHandler');
+const { createError } = require('../middleware/errorhandler');
 
 const SALT_ROUNDS = 12;
 
