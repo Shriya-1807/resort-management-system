@@ -10,8 +10,14 @@ const money = (value) => `Rs. ${Number(value || 0).toLocaleString('en-IN')}`
 const todayISO = () => new Date().toISOString().split('T')[0]
 const isInStayWindow = (booking) => {
   if (!booking) return false
-  const today = todayISO()
-  return ['CONFIRMED', 'CHECKED_IN'].includes(booking.status) && today >= booking.check_in && today < booking.check_out
+  if (booking.status === 'CHECKED_IN') return true
+  if (booking.status === 'CONFIRMED') {
+    const today = todayISO()
+    const checkIn = String(booking.check_in).split('T')[0]
+    const checkOut = String(booking.check_out).split('T')[0]
+    return today >= checkIn && today <= checkOut
+  }
+  return false
 }
 
 export default function RestaurantPage() {
@@ -120,7 +126,7 @@ export default function RestaurantPage() {
 
           {!canOrder && booking && (
             <div className={styles.stayNotice}>
-              Food ordering opens during your stay only. This booking runs from {booking.check_in} to {booking.check_out}.
+              Food ordering opens during your stay only. This booking runs from {String(booking.check_in).split('T')[0]} to {String(booking.check_out).split('T')[0]}.
             </div>
           )}
 

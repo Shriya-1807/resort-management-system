@@ -6,6 +6,20 @@ import api from '../api/client'
 import toast from 'react-hot-toast'
 import styles from './FlowPages.module.css'
 
+import roomAmber from '../assets/images/room-amber.jpg'
+import roomFlame from '../assets/images/room-flame.jpg'
+import roomPenthouse from '../assets/images/room-penthouse.jpg'
+import hero1 from '../assets/images/hero-1.jpg'
+
+const getRoomImage = (name = '') => {
+  if (!name) return hero1;
+  const n = name.toLowerCase();
+  if (n.includes('flame')) return roomFlame;
+  if (n.includes('poinciana')) return roomPenthouse;
+  if (n.includes('amber')) return roomAmber;
+  return hero1;
+}
+
 const today = new Date().toISOString().split('T')[0]
 const tomorrow = new Date(Date.now() + 86400000).toISOString().split('T')[0]
 const money = (value) => `Rs. ${Number(value || 0).toLocaleString('en-IN')}`
@@ -88,7 +102,7 @@ export default function BookingPage() {
         </form>
 
         <aside className={styles.summary}>
-          <div className={styles.summaryImage} style={{ backgroundImage: `url(/images/room-${room?.type_name?.toLowerCase().includes('flame') ? 'flame' : room?.type_name?.toLowerCase().includes('poinciana') ? 'penthouse' : 'amber'}.jpg)` }} />
+          <div className={styles.summaryImage} style={{ backgroundImage: `url(${getRoomImage(room?.type_name)})` }} />
           <div className={styles.side}>
             <h3>{room?.type_name || 'No room selected'}</h3>
             <div className={styles.line}><span><CalendarDays size={13} /> Check-in</span><strong>{form.check_in}</strong></div>

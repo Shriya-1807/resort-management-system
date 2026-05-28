@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { ChevronLeft, ChevronRight, Star, Waves, Dumbbell, UtensilsCrossed,
-         Wifi, Car, TreePine, Sparkles, ArrowRight, Users, BedDouble, Coffee } from 'lucide-react'
+import {
+  ChevronLeft, ChevronRight, Star, Waves, Dumbbell, UtensilsCrossed,
+  Wifi, Car, TreePine, Sparkles, ArrowRight, Users, BedDouble, Coffee
+} from 'lucide-react'
 import styles from './HomePage.module.css'
 
 import hero1 from '../assets/images/hero-1.jpg'
@@ -15,7 +17,6 @@ import roomAmber from '../assets/images/room-amber.jpg'
 import roomFlame from '../assets/images/room-flame.jpg'
 import roomPenthouse from '../assets/images/room-penthouse.jpg'
 import logoImg from '../components/logo.jpg'
-
 import img1 from '../assets/images/1.jpg'
 import img2 from '../assets/images/2.jpg'
 import img4 from '../assets/images/4.jpg'
@@ -31,14 +32,14 @@ const SLIDES = [
 ]
 
 const AMENITIES = [
-  { icon: Waves,        label: 'Lagoon Pool',       desc: 'An expansive free-form lagoon pool surrounded by tropical palms' },
-  { icon: UtensilsCrossed, label: 'Fine Dining',    desc: 'The Vermilion Pavilion — open 24×7, serving Indian & continental cuisine' },
-  { icon: Sparkles,     label: 'Spa & Wellness',    desc: 'Ayurvedic treatments and full-body therapies in a serene garden setting' },
-  { icon: Dumbbell,     label: 'Fitness Centre',    desc: 'State-of-the-art gym with personal trainers available on request' },
-  { icon: TreePine,     label: 'Kids Play Area',    desc: 'A safe, adventure-filled outdoor space for the little explorers' },
-  { icon: Coffee,       label: 'Grand Ballroom',    desc: 'Elegant event spaces for weddings, conferences, and celebrations' },
-  { icon: Wifi,         label: 'High-Speed Wi-Fi',  desc: 'Seamless connectivity across every corner of the resort' },
-  { icon: Car,          label: 'Free Parking',      desc: 'Complimentary valet and self-parking for all guests' },
+  { icon: Waves, label: 'Lagoon Pool', desc: 'An expansive free-form lagoon pool surrounded by tropical palms' },
+  { icon: UtensilsCrossed, label: 'Fine Dining', desc: 'The Vermilion Pavilion — open 24×7, serving Indian & continental cuisine' },
+  { icon: Sparkles, label: 'Spa & Wellness', desc: 'Ayurvedic treatments and full-body therapies in a serene garden setting' },
+  { icon: Dumbbell, label: 'Fitness Centre', desc: 'State-of-the-art gym with personal trainers available on request' },
+  { icon: TreePine, label: 'Kids Play Area', desc: 'A safe, adventure-filled outdoor space for the little explorers' },
+  { icon: Coffee, label: 'Grand Ballroom', desc: 'Elegant event spaces for weddings, conferences, and celebrations' },
+  { icon: Wifi, label: 'High-Speed Wi-Fi', desc: 'Seamless connectivity across every corner of the resort' },
+  { icon: Car, label: 'Free Parking', desc: 'Complimentary valet and self-parking for all guests' },
 ]
 
 const ROOMS = [
@@ -73,15 +74,15 @@ const ROOMS = [
 
 const STATS = [
   { value: '30+', label: 'Rooms & Villas' },
-  { value: '5★',  label: 'Guest Rating' },
+  { value: '5★', label: 'Guest Rating' },
   { value: '24/7', label: 'Concierge' },
   { value: '15+', label: 'Years of Hospitality' },
 ]
 
 export default function HomePage({ onOpenAuth }) {
   const { user } = useAuth()
-  const navigate  = useNavigate()
-  const [slide, setSlide]   = useState(0)
+  const navigate = useNavigate()
+  const [slide, setSlide] = useState(0)
   const [fading, setFading] = useState(false)
   const timerRef = useRef(null)
 
@@ -273,7 +274,7 @@ export default function HomePage({ onOpenAuth }) {
           { id: 4, src: img4 },
           { id: 5, src: img5 }
         ].map(item => (
-          <div key={item.id} className={styles.galleryCell} style={{ 
+          <div key={item.id} className={styles.galleryCell} style={{
             backgroundImage: `url(${item.src})`,
             backgroundSize: item.id === 3 ? 'contain' : 'cover',
             backgroundRepeat: 'no-repeat',

@@ -9,8 +9,14 @@ import styles from './TicketsPage.module.css'
 const todayISO = () => new Date().toISOString().split('T')[0]
 const isInStayWindow = (booking) => {
   if (!booking) return false
-  const today = todayISO()
-  return ['CONFIRMED', 'CHECKED_IN'].includes(booking.status) && today >= booking.check_in && today < booking.check_out
+  if (booking.status === 'CHECKED_IN') return true
+  if (booking.status === 'CONFIRMED') {
+    const today = todayISO()
+    const checkIn = String(booking.check_in).split('T')[0]
+    const checkOut = String(booking.check_out).split('T')[0]
+    return today >= checkIn && today <= checkOut
+  }
+  return false
 }
 
 export default function TicketsPage() {
@@ -82,7 +88,7 @@ export default function TicketsPage() {
           </p>
           {!canCreateTicket && booking && (
             <div className={styles.stayNotice}>
-              Service tickets can be generated only during your stay. This booking runs from {booking.check_in} to {booking.check_out}.
+              Service tickets can be generated only during your stay. This booking runs from {String(booking.check_in).split('T')[0]} to {String(booking.check_out).split('T')[0]}.
             </div>
           )}
 

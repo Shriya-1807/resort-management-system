@@ -1,7 +1,7 @@
 'use strict';
- 
+
 const mysql = require('mysql2/promise');
- 
+
 const pool = mysql.createPool({
   host              : process.env.DB_HOST     || 'localhost',
   port              : parseInt(process.env.DB_PORT || '3306'),
@@ -13,7 +13,10 @@ const pool = mysql.createPool({
   queueLimit        : 0,
   timezone          : '+00:00',              
   decimalNumbers    : true,                  
+
+  ssl: process.env.DB_HOST && process.env.DB_HOST !== 'localhost' 
+    ? { rejectUnauthorized: false } 
+    : false
 });
- 
+
 module.exports = pool;
- 

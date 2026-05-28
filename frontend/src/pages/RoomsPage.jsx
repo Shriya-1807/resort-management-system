@@ -7,14 +7,19 @@ import api from '../api/client'
 import toast from 'react-hot-toast'
 import styles from './FlowPages.module.css'
 
+import roomAmber from '../assets/images/room-amber.jpg'
+import roomFlame from '../assets/images/room-flame.jpg'
+import roomPenthouse from '../assets/images/room-penthouse.jpg'
+import hero1 from '../assets/images/hero-1.jpg'
+
 const today = new Date().toISOString().split('T')[0]
 const tomorrow = new Date(Date.now() + 86400000).toISOString().split('T')[0]
 
 const roomImage = (name = '') => {
-  if (name.toLowerCase().includes('amber')) return '/images/room-amber.jpg'
-  if (name.toLowerCase().includes('flame')) return '/images/room-flame.jpg'
-  if (name.toLowerCase().includes('poinciana')) return '/images/room-penthouse.jpg'
-  return '/images/room-default.jpg'
+  if (name.toLowerCase().includes('amber')) return roomAmber
+  if (name.toLowerCase().includes('flame')) return roomFlame
+  if (name.toLowerCase().includes('poinciana')) return roomPenthouse
+  return hero1
 }
 
 const money = (value) => `Rs. ${Number(value || 0).toLocaleString('en-IN')}`
