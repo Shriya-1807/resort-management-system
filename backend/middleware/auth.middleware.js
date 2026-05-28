@@ -3,7 +3,7 @@
 'use strict';
 
 const { verifyToken }  = require('../utils/jwt');
-const { createError }  = require('./errorHandler');
+const { createError }  = require('./errorhandler');
 
 const authenticate = (req, _res, next) => {
   try {
