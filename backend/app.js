@@ -30,10 +30,18 @@ const allowedOrigins = `${process.env.ALLOWED_ORIGIN || 'http://localhost:3000'}
 
 app.use(cors({
   origin(origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
+    // 1. Allow server-to-server or postman requests (no origin)
+    if (!origin) return callback(null, true);
+    
+    // 2. Check if wildcard '*' is present OR if the origin matches explicitly
+    if (allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    
     return callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
+  optionsSuccessStatus: 200 // Ensures preflight OPTIONS requests return a clean 200 status
 }));
 
 // ── Body parsing ──────────────────────────────────────────────
