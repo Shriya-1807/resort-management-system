@@ -20,11 +20,14 @@ const { errorHandler } = require('./middleware/errorhandler');
 
 const app = express();
 
+app.set('trust proxy', 1);
+
 // ── Security headers ──────────────────────────────────────────
 app.use(helmet());
 
 // ── CORS ──────────────────────────────────────────────────────
-const allowedOrigins = `${process.env.ALLOWED_ORIGIN || 'http://localhost:3000'},http://localhost:5173,http://localhost:3001`
+const configuredOrigins = process.env.ALLOWED_ORIGINS || process.env.ALLOWED_ORIGIN || 'http://localhost:3000';
+const allowedOrigins = `${configuredOrigins},http://localhost:5173,http://localhost:3001`
   .split(',')
   .map(origin => origin.trim());
 
