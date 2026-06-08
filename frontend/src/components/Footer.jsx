@@ -67,7 +67,7 @@ export default function Footer() {
             <p style={{ fontSize: '0.7rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--amber-light)', fontWeight: 600, marginBottom: '1.2rem' }}>Get In Touch</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {[
-                { Icon: MapPin, text: '123 Gulmohar Marg, Near Lake Road, Nagpur, Maharashtra 440001' },
+                { Icon: MapPin, text: 'Mysuru-Madikeri Road, Coorg, Karnataka 571201' },
                 { Icon: Phone, text: '+91 98765 43210' },
                 { Icon: Mail,  text: 'reservations@gulmoharresort.in' },
               ].map(({ Icon, text }, i) => (
@@ -93,7 +93,7 @@ export default function Footer() {
           gap: '0.5rem',
         }}>
           <span>© {new Date().getFullYear()} Gulmohar Resort. All rights reserved.</span>
-          <span>Crafted with care in Nagpur, India</span>
+          <span>Crafted with care in Coorg, India</span>
         </div>
       </div>
     </footer>
