@@ -2,7 +2,7 @@
 
 A comprehensive full-stack web application designed to streamline the operations of a modern resort. This platform enables administrators to manage bookings, inventory, restaurant orders, and guest services seamlessly, while providing an intuitive interface for staff and a dedicated frontend for users.
 
-**Live Demo**: https://resort-management-system-user-front.vercel.app/
+**Deployed Link**: https://resort-management-system-user-front.vercel.app/
 
 ## Features
 
