@@ -147,6 +147,28 @@ const updateOrderStatus = async (order_id, status) => {
 };
 
 /**
+ * Cancel order by guest.
+ */
+const cancelOrderGuest = async (order_id, requestor) => {
+  const [rows] = await pool.execute(
+    `SELECT ro.status, b.guest_id
+       FROM RestaurantOrder ro
+       JOIN Booking b ON ro.booking_id = b.booking_id
+      WHERE ro.order_id = ?`,
+    [order_id]
+  );
+  if (!rows.length) throw createError(404, 'Order not found');
+  if (rows[0].guest_id !== requestor.id) throw createError(403, 'You do not own this order');
+  if (rows[0].status !== 'PLACED') throw createError(400, 'Only PLACED orders can be cancelled');
+
+  await pool.execute(
+    `UPDATE RestaurantOrder SET status = 'CANCELLED' WHERE order_id = ?`,
+    [order_id]
+  );
+  return { order_id, status: 'CANCELLED' };
+};
+
+/**
  * Rate a served order item.
  */
 const rateOrderItem = async (order_item_id, { stars, comment }, requestor) => {
@@ -204,6 +226,7 @@ module.exports = {
   placeOrder,
   getOrdersByBooking,
   updateOrderStatus,
+  cancelOrderGuest,
   rateOrderItem,
   getActiveOrders,
   toggleMenuItemAvailability,

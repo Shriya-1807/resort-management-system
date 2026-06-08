@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { Minus, Plus, ShoppingBag, UtensilsCrossed } from 'lucide-react'
+import { Minus, Plus, ShoppingBag, UtensilsCrossed, XCircle } from 'lucide-react'
 import api from '../api/client'
 import toast from 'react-hot-toast'
 import styles from './RestaurantPage.module.css'
@@ -104,6 +104,17 @@ export default function RestaurantPage() {
     }
   }
 
+  const cancelOrder = async (orderId) => {
+    try {
+      await api.patch(`/restaurant/orders/${orderId}/cancel`)
+      toast.success('Order cancelled successfully')
+      const ordersRes = await api.get(`/restaurant/orders/${bookingId}`)
+      setOrders(ordersRes.data)
+    } catch (err) {
+      toast.error(err.message)
+    }
+  }
+
   return (
     <main className={styles.page}>
       <section className={styles.hero}>
@@ -197,7 +208,7 @@ export default function RestaurantPage() {
             <strong>{money(total)}</strong>
           </div>
           <button className="btn btn-primary" onClick={placeOrder} disabled={!canOrder}>
-            <UtensilsCrossed size={15} /> Pay and Confirm Order
+            <UtensilsCrossed size={15} /> Confirm Order
           </button>
 
           <div className={styles.history}>
@@ -208,7 +219,14 @@ export default function RestaurantPage() {
                   <strong>Order #{order.order_id}</strong>
                   <span>{order.delivery_type} - {money(order.total_amount)}</span>
                 </div>
-                <span className={`badge status-${order.status}`}>{order.status}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span className={`badge status-${order.status}`}>{order.status}</span>
+                  {order.status === 'PLACED' && (
+                    <button className="btn btn-danger btn-sm" onClick={() => cancelOrder(order.order_id)}>
+                      <XCircle size={14} /> Cancel
+                    </button>
+                  )}
+                </div>
               </article>
             ))}
           </div>

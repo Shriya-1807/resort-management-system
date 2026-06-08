@@ -80,6 +80,21 @@ router.patch('/orders/:order_id/status',
   }
 );
 
+// ── PATCH /api/restaurant/orders/:order_id/cancel  –  Guest ──
+router.patch('/orders/:order_id/cancel',
+  authenticate, requireGuest,
+  [param('order_id').isInt({ min: 1 })],
+  validate,
+  async (req, res, next) => {
+    try {
+      const result = await restaurantService.cancelOrderGuest(
+        parseInt(req.params.order_id), req.user
+      );
+      res.json(result);
+    } catch (err) { next(err); }
+  }
+);
+
 // ── POST /api/restaurant/ratings  –  Rate an order item ──────
 router.post('/ratings',
   authenticate, requireGuest,
