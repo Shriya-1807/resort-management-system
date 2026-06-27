@@ -34,7 +34,7 @@ A comprehensive full-stack web application designed to streamline the operations
 
 This project utilizes a modern cloud-native deployment strategy:
 
-- **Frontend**: Deployed and hosted on **Render** for fast global content delivery.
+- **Frontend**: Deployed and hosted on **Vercel** for fast global content delivery.
 - **Backend**: Deployed on **Railway**, providing a reliable and scalable Node.js environment.
 - **Database**: Cloud MySQL database hosted on **Aiven**, ensuring high availability and secure data storage.
 
